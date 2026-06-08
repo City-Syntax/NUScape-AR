@@ -652,50 +652,7 @@
           bg.setAttribute('material', 'src: #lbl-' + idx + '; side: double; transparent: false; shader: flat');
 
           // Description group (hidden until tap)
-          var descGroup = document.createElement('a-entity');
-          descGroup.id = 'ar-desc-' + idx;
-          descGroup.setAttribute('visible', 'false');
-          descGroup.setAttribute('position', '0 1.5 0');
-
-          // Description panel — positioned to the RIGHT of the main label
-          var descPlane = document.createElement('a-plane');
-          descPlane.id = 'ar-desc-plane-' + idx;
-          descPlane.setAttribute('width', '7.0');
-          descPlane.setAttribute('height', '4.4');
-          descPlane.setAttribute('position', '5.0 0 0');
-          descPlane.setAttribute('material', 'color: #0d1a1c; side: double; shader: flat');
-
-          // Invisible play-button hitbox
-          var playHitbox = document.createElement('a-plane');
-          playHitbox.id = 'ar-play-' + idx;
-          playHitbox.setAttribute('width', '1.5');
-          playHitbox.setAttribute('height', '1.5');
-          playHitbox.setAttribute('position', '5.0 -1.83 0.02');
-          playHitbox.setAttribute('material', 'opacity: 0; transparent: true; shader: flat; side: double');
-
-          // Info label plane (right of main label, same Y level)
-          var infoLbl = document.createElement('a-plane');
-          infoLbl.id = 'ar-ilbl-' + idx;
-          infoLbl.setAttribute('width', '2.2');
-          infoLbl.setAttribute('height', '1.1');
-          infoLbl.setAttribute('position', '2.5 0 0');
-          infoLbl.setAttribute('visible', 'false');
-          infoLbl.setAttribute('material', 'src: #ilbl-' + idx + '; side: double; transparent: false; shader: flat');
-
-          // Invisible X-button hitbox — top-right of desc panel (now on right side)
-          var xHitbox = document.createElement('a-plane');
-          xHitbox.id = 'ar-xbtn-' + idx;
-          xHitbox.setAttribute('width', '0.9');
-          xHitbox.setAttribute('height', '0.9');
-          xHitbox.setAttribute('position', '8.17 1.87 0.02');
-          xHitbox.setAttribute('material', 'opacity: 0; transparent: true; shader: flat; side: double');
-
-          descGroup.appendChild(descPlane);
-          descGroup.appendChild(playHitbox);
-          descGroup.appendChild(xHitbox);
           label.appendChild(bg);
-          label.appendChild(infoLbl);
-          label.appendChild(descGroup);
           upContainer.appendChild(label);
           marker.appendChild(upContainer);
 
@@ -942,7 +899,6 @@
     let euiInstance   = null;
     let mapsHideTimer = null;
     let activeIdx         = null;
-    let descOpenIdx       = null;
     const openDaylightFloors = new Set();
     let currentView       = 'pie';
     let currentMapsView   = 'map';
@@ -1088,89 +1044,7 @@
       _audio.play();
     }
 
-    // ── Description panel show/hide ────────────────────────────────────────────
-    function showDescPanel(idx) {
-      var g = document.getElementById('ar-desc-' + idx);
-      if (g && g.object3D) g.object3D.visible = true;
-    }
-    function hideDescPanel(idx) {
-      var g = document.getElementById('ar-desc-' + idx);
-      if (g && g.object3D) g.object3D.visible = false;
-    }
 
-    function generateDescCanvas(idx) {
-      if (window._descCanvases && window._descCanvases[idx]) return;
-      var b = window.BUILDINGS[idx];
-      var jt = window._justifyText;
-      var DW = 3200, DH = 2000;
-      var dv = document.createElement('canvas');
-      dv.width = DW; dv.height = DH;
-      var dx = dv.getContext('2d');
-      dx.fillStyle = '#0d1a1c'; dx.fillRect(0, 0, DW, DH);
-      dx.strokeStyle = '#107b7f'; dx.lineWidth = 8;
-      dx.strokeRect(4, 4, DW - 8, DH - 8);
-      dx.fillStyle = '#ffffff'; dx.textAlign = 'left'; dx.textBaseline = 'top';
-      dx.font = 'bold 129px Arial, sans-serif';
-      var nl = jt(dx, b.full_name, 70, 58, DW - 140, 165);
-      var divY = 58 + nl * 165 + 14;
-      dx.strokeStyle = '#107b7f'; dx.lineWidth = 3;
-      dx.beginPath(); dx.moveTo(70, divY); dx.lineTo(DW - 70, divY); dx.stroke();
-      var desc = (window.BUILDING_DESCS && window.BUILDING_DESCS[b.name]) || b.full_name;
-      dx.fillStyle = 'rgba(255,255,255,0.85)'; dx.font = '129px Arial, sans-serif';
-      jt(dx, desc, 70, divY + 28, DW - 140, 165);
-      var bx = DW / 2, by = DH - 170, br = 140;
-      dx.fillStyle = '#107b7f';
-      dx.beginPath(); dx.arc(bx, by, br, 0, Math.PI * 2); dx.fill();
-      dx.fillStyle = '#ffffff';
-      dx.beginPath();
-      dx.moveTo(bx - 45, by - 62); dx.lineTo(bx - 45, by + 62); dx.lineTo(bx + 66, by);
-      dx.closePath(); dx.fill();
-      var xx = DW - 150, xy = 150, xr = 110;
-      dx.fillStyle = 'rgba(255,255,255,0.18)';
-      dx.beginPath(); dx.arc(xx, xy, xr, 0, Math.PI * 2); dx.fill();
-      dx.strokeStyle = '#ffffff'; dx.lineWidth = 16; var xo = 58;
-      dx.beginPath();
-      dx.moveTo(xx - xo, xy - xo); dx.lineTo(xx + xo, xy + xo);
-      dx.moveTo(xx + xo, xy - xo); dx.lineTo(xx - xo, xy + xo);
-      dx.stroke();
-      if (!window._descCanvases) window._descCanvases = [];
-      window._descCanvases[idx] = dv;
-      var plane = document.getElementById('ar-desc-plane-' + idx);
-      if (!plane) return;
-      function tryApply() {
-        var mesh = plane.getObject3D('mesh');
-        if (!mesh || !mesh.material) { setTimeout(tryApply, 50); return; }
-        if (mesh.material.map) mesh.material.map.dispose();
-        var tex = new THREE.CanvasTexture(dv);
-        tex.colorSpace = THREE.SRGBColorSpace;
-        tex.needsUpdate = true;
-        mesh.material.map = tex;
-        mesh.material.color.set(0xffffff);
-        mesh.material.needsUpdate = true;
-      }
-      tryApply();
-    }
-
-    function showDescIndependent(idx) {
-      generateDescCanvas(idx);
-      showDescPanel(idx);
-      const ilbl = document.getElementById('ar-ilbl-' + idx);
-      if (ilbl && ilbl.object3D) ilbl.object3D.visible = false;
-      descOpenIdx = idx;
-    }
-
-    function hideDescIndependent() {
-      if (descOpenIdx === null) return;
-      const prev = descOpenIdx;
-      descOpenIdx = null;
-      hideDescPanel(prev);
-      const ilbl = document.getElementById('ar-ilbl-' + prev);
-      if (ilbl && ilbl.object3D) ilbl.object3D.visible = true;
-      if (_speaking && _speechIdx === prev && _audio) {
-        _audio.pause(); _audio.currentTime = 0;
-        setPlayBtn(prev, false); _speaking = false; _speechIdx = -1;
-      }
-    }
 
     function updateFloorBtn(idx, floorKey, active) {
       var entry = window._floorBtnCanvases && window._floorBtnCanvases[idx + '-' + floorKey];
@@ -1364,10 +1238,7 @@
     function hideChart() {
       if (activeIdx !== null) {
         setLabelHint(activeIdx, false);
-        if (descOpenIdx === activeIdx) hideDescIndependent();
         if (openDaylightFloors.size > 0) hideDaylightFloor();
-        const ilbl = document.getElementById('ar-ilbl-' + activeIdx);
-        if (ilbl && ilbl.object3D) ilbl.object3D.visible = false;
         const hideFloors = window.DAYLIGHT_FLOORS[BUILDINGS[activeIdx].name];
         if (hideFloors) hideFloors.forEach(function(f) {
           var fup = document.getElementById('fl-up-' + activeIdx + '-' + f.key);
@@ -1380,8 +1251,7 @@
         var mel = document.getElementById('marker-' + activeIdx);
         var pf = mel && mel.components && mel.components['pose-filter'];
         if (pf) { pf._holdMode = false; pf._ready = false; pf._isLost = false; }
-      }
-      if (_speaking && _audio) { _audio.pause(); _audio.currentTime = 0; setPlayBtn(_speechIdx, false); _speaking = false; _speechIdx = -1; }
+      if (_speaking && _audio) { _audio.pause(); _audio.currentTime = 0; _speaking = false; _speechIdx = -1; }
       setOtherLabelsVisible(-1, true);
       activeIdx = null;
       chartPanel.classList.remove('visible');
@@ -1505,9 +1375,8 @@
         }
       }
 
-      // Hit test main labels, info labels, and daylight floor buttons
+      // Hit test main labels and daylight floor buttons
       let bestIdx = -1, bestDist = 40;
-      let bestInfoIdx = -1, bestInfoDist = 40;
       let bestFloorIdx = -1, bestFloorKey = null, bestFloorDist = 40;
 
       for (let idx = 0; idx < BUILDINGS.length; idx++) {
@@ -1524,19 +1393,6 @@
             const sy = (-_arVec.y + 1) / 2 * r.height + r.top;
             const dist = Math.sqrt((cx - sx) ** 2 + (cy - sy) ** 2);
             if (dist < bestDist) { bestDist = dist; bestIdx = idx; }
-          }
-        }
-
-        const ilbl = document.getElementById('ar-ilbl-' + idx);
-        const upEl = document.getElementById('ar-up-' + idx);
-        if (ilbl && ilbl.object3D.visible && upEl && upEl.object3D.visible) {
-          ilbl.object3D.getWorldPosition(_arVec);
-          _arVec.project(sceneEl.camera);
-          if (_arVec.z <= 1) {
-            const sx = (_arVec.x + 1) / 2 * r.width + r.left;
-            const sy = (-_arVec.y + 1) / 2 * r.height + r.top;
-            const dist = Math.sqrt((cx - sx) ** 2 + (cy - sy) ** 2);
-            if (dist < bestInfoDist) { bestInfoDist = dist; bestInfoIdx = idx; }
           }
         }
 
@@ -1558,19 +1414,9 @@
         }
       }
 
-      const minOther = Math.min(bestDist, bestInfoDist);
-
-      if (bestFloorKey !== null && bestFloorDist < minOther) {
+      if (bestFloorKey !== null && bestFloorDist < bestDist) {
         pulseEl(document.getElementById('fl-btn-' + bestFloorIdx + '-' + bestFloorKey));
         toggleDaylightFloor(bestFloorIdx, bestFloorKey);
-      } else if (bestInfoIdx !== -1 && bestInfoDist < bestDist) {
-        pulseEl(document.getElementById('ar-ilbl-' + bestInfoIdx));
-        if (descOpenIdx === bestInfoIdx) {
-          hideDescIndependent();
-        } else {
-          if (descOpenIdx !== null) hideDescIndependent();
-          showDescIndependent(bestInfoIdx);
-        }
       } else if (bestIdx !== -1) {
         pulseTap(bestIdx);
         if (activeIdx === bestIdx) {
