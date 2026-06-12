@@ -314,7 +314,8 @@
   // ── Router ──
   function route() {
     var params = new URLSearchParams(location.search);
-    var raw = params.get('b');
+    var pathSeg = location.pathname.replace(/^\/campus\/?/, '').replace(/\/$/, '');
+    var raw = params.get('b') || (pathSeg ? pathSeg : null);
     if (raw) {
       var key = byName[raw]
         ? raw
