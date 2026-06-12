@@ -69,6 +69,9 @@
     .gallery-subtitle {
       font-size: 13px; color: #555; line-height: 1.6; max-width: 480px;
     }
+    .gallery-grid-wrap {
+      padding: 0 24px;
+    }
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -237,7 +240,7 @@
     <h1 class="gallery-title">Building Video Tour</h1>
     <p class="gallery-subtitle">Explore NUS's College of Design and Engineering campus. Tap any building to learn more and watch its feature video.</p>
   </div>
-  <div class="gallery-grid" id="gallery-grid"></div>
+  <div class="gallery-grid-wrap"><div class="gallery-grid" id="gallery-grid"></div></div>
 </div>
 
 <!-- INDIVIDUAL BUILDING VIEW -->
