@@ -169,6 +169,11 @@
     }
     .bld-watch-btn:active { background: #0d6568; }
     .bld-watch-btn::before { content: '▶'; font-size: 10px; }
+    .bld-credit {
+      margin-top: 14px; font-size: 11px; color: #888;
+    }
+    .bld-credit a { color: #107b7f; text-decoration: none; }
+    .bld-credit a:hover { text-decoration: underline; }
     .bld-no-video {
       margin-top: 20px; padding: 14px 18px;
       background: rgba(0,0,0,0.05); border-radius: 6px;
@@ -244,6 +249,7 @@
     <div class="bld-full" id="bld-full"></div>
     <div class="bld-divider"></div>
     <p class="bld-desc" id="bld-desc"></p>
+    <p class="bld-credit" id="bld-credit"></p>
     <div id="bld-action"></div>
   </div>
 </div>
@@ -274,9 +280,9 @@
     { name: 'EW1',   full: 'Engineering Workshop 1',                        img: '/ar/imgs/ew1mpaview.webp',  video: '/videos/EW1.mp4'   },
     { name: 'EW1A',  full: 'Engineering Workshop 1A',                       img: '/ar/imgs/EW1Amapview.webp', video: null               },
     { name: 'IT',    full: 'NUS Information Technology',                    img: '/ar/imgs/it.webp',          video: '/videos/IT.mp4'    },
-    { name: 'SDE1',  full: 'School of Design and Environment Block 1',     img: '/ar/imgs/sde1.webp',        video: null               },
+    { name: 'SDE1',  full: 'School of Design and Environment Block 1',     img: '/ar/imgs/sde1.webp',        video: '/videos/SDE1_3.mp4', credit: { name: 'Kevin Siyuan', url: 'https://www.youtube.com/watch?v=fubkzGkYL_M' } },
     { name: 'SDE2',  full: 'School of Design and Environment Block 2',     img: '/ar/imgs/sde2.webp',        video: '/videos/SDE2.mp4'  },
-    { name: 'SDE3',  full: 'School of Design and Environment Block 3',     img: '/ar/imgs/sde3mapoview.webp',video: null               },
+    { name: 'SDE3',  full: 'School of Design and Environment Block 3',     img: '/ar/imgs/sde3mapoview.webp',video: '/videos/SDE1_3.mp4', credit: { name: 'Kevin Siyuan', url: 'https://www.youtube.com/watch?v=fubkzGkYL_M' } },
     { name: 'SDE4',  full: 'School of Design and Environment 4',           img: '/ar/imgs/sde4.webp',        video: '/videos/SDE4.mp4'  },
     { name: 'T-Lab', full: 'Temasek Laboratories at NUS',                  img: '/ar/imgs/TLabmapview.webp', video: '/videos/Tlab.mp4'  },
     { name: 'Techno Edge', full: 'Techno Edge Canteen',                    img: '/ar/imgs/technoedge.png',   video: '/videos/TechnoEdge.mp4' },
@@ -400,6 +406,12 @@
     document.getElementById('bld-name').textContent = b.name;
     document.getElementById('bld-full').textContent = b.full;
     document.getElementById('bld-desc').textContent = DESCS[b.name] || '';
+    var creditEl = document.getElementById('bld-credit');
+    if (b.credit) {
+      creditEl.innerHTML = 'Video credit: <a href="' + b.credit.url + '" target="_blank" rel="noopener">' + b.credit.name + '</a>';
+    } else {
+      creditEl.innerHTML = '';
+    }
 
     var vid = document.getElementById('bld-video');
     var overlay = document.getElementById('bld-play-overlay');
