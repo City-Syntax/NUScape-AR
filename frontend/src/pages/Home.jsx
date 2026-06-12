@@ -94,7 +94,6 @@ export default function Home() {
       <header className="home-header">
         <img src="/logo.webp" alt="NUS Built Environment" className="home-header-logo" />
         <nav className="home-nav">
-          <a href="/campus/" className="home-nav-link">Campus Tour</a>
         </nav>
         <span className="home-label">2026</span>
       </header>
