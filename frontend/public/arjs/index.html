@@ -1865,6 +1865,17 @@
     window.addEventListener('pagehide', _stopCamera);
     window.addEventListener('beforeunload', _stopCamera);
 
+    // Request fullscreen for Chrome (Fullscreen API unsupported in Safari — no-op there)
+    (function () {
+      var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (!isSafari && document.documentElement.requestFullscreen) {
+        document.addEventListener('click', function enterFS() {
+          document.documentElement.requestFullscreen().catch(function () {});
+          document.removeEventListener('click', enterFS);
+        }, { once: true });
+      }
+    })();
+
     // If iOS restores this page from bfcache, AR.js/Three.js state is stale — force a fresh load
     window.addEventListener('pageshow', function (e) {
       if (e.persisted) window.location.reload();
