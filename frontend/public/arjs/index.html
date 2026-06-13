@@ -728,13 +728,15 @@
             var flXOff = _flXOffMap[b.name] !== undefined ? _flXOffMap[b.name] : 0.5;
             var _flRotYMap = { 'T-Lab': 180 };
             var _flGrpYMap = { 'T-Lab': -1.5 };
+            var _flGrpZMap = { 'E4': 0.3 };
             var flRotY = _flRotYMap[b.name] || 0;
             var flGrpY = _flGrpYMap[b.name] || 0;
+            var flGrpZ = _flGrpZMap[b.name] || 0;
             var flParent = marker;
-            if (flRotY || flGrpY) {
+            if (flRotY || flGrpY || flGrpZ) {
               var flGroup = document.createElement('a-entity');
               flGroup.setAttribute('rotation', '0 ' + flRotY + ' 0');
-              if (flGrpY) flGroup.setAttribute('position', '0 ' + flGrpY + ' 0');
+              if (flGrpY || flGrpZ) flGroup.setAttribute('position', '0 ' + flGrpY + ' ' + flGrpZ);
               marker.appendChild(flGroup);
               flParent = flGroup;
             }
@@ -827,7 +829,7 @@
               if (flIdx === 0) {
                 var heatmapLbl = document.createElement('a-text');
                 heatmapLbl.setAttribute('value', 'DAYLIGHT\nHEATMAP');
-                heatmapLbl.setAttribute('position', (-5.58 + flXOff) + ' 1 -1.5');
+                heatmapLbl.setAttribute('position', (-5.58 + flXOff) + ' 1 -0.7');
                 heatmapLbl.setAttribute('align', 'center');
                 heatmapLbl.setAttribute('color', '#000000');
                 heatmapLbl.setAttribute('width', '5');
