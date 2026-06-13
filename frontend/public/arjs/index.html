@@ -799,7 +799,7 @@
 
               // Z-offset wrapper so floors spread apart when viewed from top
               var flOffsetEl = document.createElement('a-entity');
-              flOffsetEl.setAttribute('position', '0 0 ' + (flIdx * 0.4).toFixed(2));
+              flOffsetEl.setAttribute('position', (flIdx * 0.4).toFixed(2) + ' 0 0');
 
               flDg.appendChild(flImg);
               tapBb.appendChild(tapIconEl);
