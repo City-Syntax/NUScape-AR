@@ -786,7 +786,7 @@
                 flDotGroup.appendChild(hdash);
               }
 
-              // Daylight group — fixed orientation, moves with up-track
+              // Daylight group — child of flBb so it rotates exactly with the labels
               var flDg = document.createElement('a-entity');
               flDg.id = 'fl-dg-' + idx + '-' + fl.key;
               flDg.setAttribute('visible', 'false');
@@ -801,7 +801,7 @@
               flImg.setAttribute('height', (4.1 * flImgScale).toFixed(3));
               flImg.setAttribute('width', '5.5');
               flImg.setAttribute('position', (-8.5 + flXOff) + ' 0 0');
-              flImg.setAttribute('rotation', '0 0 0');
+              flImg.setAttribute('rotation', '-90 0 0');
               flImg.setAttribute('material', 'transparent: true; alphaTest: 0.05; side: double; shader: flat; depthTest: true');
               flImg.setAttribute('visible', 'false');
 
