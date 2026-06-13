@@ -1837,7 +1837,11 @@
     });
 
     window.addEventListener('orientationchange', function () {
-      setTimeout(function () { window.location.reload(); }, 400);
+      var before = window.innerWidth > window.innerHeight;
+      setTimeout(function () {
+        var after = window.innerWidth > window.innerHeight;
+        if (before !== after) window.location.reload();
+      }, 150);
     });
 
     // Intercept A-Frame's built-in webglcontextlost reload — attempt recovery instead
