@@ -521,6 +521,23 @@
 
   </div>
 
+  <script>
+    (function () {
+      var isIPad = /iPad/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (isIPad) {
+        document.addEventListener('DOMContentLoaded', function () {
+          var scene = document.querySelector('a-scene');
+          if (scene) {
+            scene.setAttribute('arjs', scene.getAttribute('arjs')
+              .replace(/\s*sourceWidth:\s*\d+;?/g, '')
+              .replace(/\s*sourceHeight:\s*\d+;?/g, '')
+              .replace(/\s*canvasWidth:\s*\d+;?/g, '')
+              .replace(/\s*canvasHeight:\s*\d+;?/g, ''));
+          }
+        });
+      }
+    })();
+  </script>
   <a-scene
     embedded
     arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_5_5; maxDetectionRate: 20; sourceWidth: 1280; sourceHeight: 960; canvasWidth: 1280; canvasHeight: 960;"
