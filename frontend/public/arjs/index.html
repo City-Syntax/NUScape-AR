@@ -786,7 +786,7 @@
                 flDotGroup.appendChild(hdash);
               }
 
-              // Daylight group — child of flBb so it rotates exactly with the labels
+              // Daylight group — fixed orientation, moves with up-track
               var flDg = document.createElement('a-entity');
               flDg.id = 'fl-dg-' + idx + '-' + fl.key;
               flDg.setAttribute('visible', 'false');
@@ -813,7 +813,6 @@
               tapBb.appendChild(tapIconEl);
               flBb.appendChild(flBtn);
               flBb.appendChild(flDotGroup);
-              flBb.appendChild(flDg);
               if (flIdx === 0) {
                 var heatmapLbl = document.createElement('a-text');
                 heatmapLbl.setAttribute('value', 'DAYLIGHT\nHEATMAP');
@@ -826,6 +825,7 @@
               }
               flOffsetEl.appendChild(flBb);
               flOffsetEl.appendChild(tapBb);
+              flOffsetEl.appendChild(flDg);
               flUpEl.appendChild(flOffsetEl);
               flParent.appendChild(flUpEl);
             });
