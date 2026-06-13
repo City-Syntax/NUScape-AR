@@ -754,8 +754,8 @@
               // Floor button plane
               var flBtn = document.createElement('a-plane');
               flBtn.id = 'fl-btn-' + idx + '-' + fl.key;
-              flBtn.setAttribute('width', '0.47');
-              flBtn.setAttribute('height', '0.30');
+              flBtn.setAttribute('width', '0.58');
+              flBtn.setAttribute('height', '0.37');
               flBtn.setAttribute('position', (-5.0 + flXOff) + ' 0 0');
               flBtn.setAttribute('material', 'side: double; transparent: false; shader: flat');
               flBtn.setAttribute('billboard', '');
@@ -766,8 +766,8 @@
 
               var tapIconEl = document.createElement('a-plane');
               tapIconEl.id = 'fl-tap-' + idx + '-' + fl.key;
-              tapIconEl.setAttribute('width', '0.40');
-              tapIconEl.setAttribute('height', '0.40');
+              tapIconEl.setAttribute('width', '0.50');
+              tapIconEl.setAttribute('height', '0.50');
               tapIconEl.setAttribute('position', (-5.58 + flXOff) + ' 0 0');
               tapIconEl.setAttribute('material', 'transparent: true; alphaTest: 0.05; shader: flat; side: double');
               tapIconEl.setAttribute('animation__pulse', 'property: scale; from: 1 1 1; to: 1.22 1.22 1; dir: alternate; dur: 900; loop: true; easing: easeInOutSine');
@@ -829,10 +829,10 @@
               if (flIdx === 0) {
                 var heatmapLbl = document.createElement('a-text');
                 heatmapLbl.setAttribute('value', 'DAYLIGHT\nHEATMAP');
-                heatmapLbl.setAttribute('position', (-5.58 + flXOff) + ' 1 -0.7');
+                heatmapLbl.setAttribute('position', (-5.58 + flXOff) + ' 1 -1.0');
                 heatmapLbl.setAttribute('align', 'center');
                 heatmapLbl.setAttribute('color', '#000000');
-                heatmapLbl.setAttribute('width', '5');
+                heatmapLbl.setAttribute('width', '6.5');
                 heatmapLbl.setAttribute('side', 'double');
                 heatmapLbl.setAttribute('billboard', '');
                 flBb.appendChild(heatmapLbl);
