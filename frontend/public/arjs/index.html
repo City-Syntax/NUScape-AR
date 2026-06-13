@@ -85,7 +85,7 @@
         if (!this.el.parentEl.object3D.visible) return;
         this.el.object3D.getWorldPosition(this._wp);
         var horiz = Math.sqrt(this._wp.x * this._wp.x + this._wp.z * this._wp.z);
-        this.el.object3D.rotation.x = Math.atan2(this._wp.y, horiz);
+        this.el.object3D.rotation.x = -Math.atan2(this._wp.y, horiz);
       }
     });
     // Keep dashes pointing toward the marker regardless of orientation
