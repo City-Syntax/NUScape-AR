@@ -786,16 +786,13 @@
                 flDotGroup.appendChild(hdash);
               }
 
-              // Daylight group — flat, spins on own Y axis to face camera
+              // Daylight group — child of flBb so it rotates exactly with the labels
               var flDg = document.createElement('a-entity');
               flDg.id = 'fl-dg-' + idx + '-' + fl.key;
               flDg.setAttribute('visible', 'false');
-              flDg.setAttribute('billboard-y', '');
 
-              // Daylight image — flat like solar mat, centered on building
               var _flScaleMap = { 'E5': 0.7, 'E2': 0.7, 'E2A': 0.85, 'EA': 1.3, 'EW1': 0.85, 'E7': 1.15, 'E4A': 0.7 };
               var flImgScale = _flScaleMap[b.name] !== undefined ? _flScaleMap[b.name] : 1;
-              var flImgZOff = (daylightFloors.length - 1 - flIdx) * 0.04;
               var flImg = document.createElement('a-plane');
               flImg.id = 'fl-img-' + idx + '-' + fl.key;
               flImg.dataset.src = fl.img;
@@ -803,8 +800,8 @@
               flImg.dataset.xoff = String(flXOff);
               flImg.setAttribute('height', (4.1 * flImgScale).toFixed(3));
               flImg.setAttribute('width', '5.5');
-              flImg.setAttribute('position', '0 0.01 ' + flImgZOff.toFixed(2));
-              flImg.setAttribute('rotation', '-90 0 0');
+              flImg.setAttribute('position', (-8.5 + flXOff) + ' 0 0');
+              flImg.setAttribute('rotation', '0 0 0');
               flImg.setAttribute('material', 'transparent: true; alphaTest: 0.05; side: double; shader: flat; depthTest: true');
               flImg.setAttribute('visible', 'false');
 
@@ -816,6 +813,7 @@
               tapBb.appendChild(tapIconEl);
               flBb.appendChild(flBtn);
               flBb.appendChild(flDotGroup);
+              flBb.appendChild(flDg);
               if (flIdx === 0) {
                 var heatmapLbl = document.createElement('a-text');
                 heatmapLbl.setAttribute('value', 'DAYLIGHT\nHEATMAP');
@@ -828,7 +826,6 @@
               }
               flOffsetEl.appendChild(flBb);
               flOffsetEl.appendChild(tapBb);
-              flOffsetEl.appendChild(flDg);
               flUpEl.appendChild(flOffsetEl);
               flParent.appendChild(flUpEl);
             });
