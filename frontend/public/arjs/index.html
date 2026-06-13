@@ -726,17 +726,18 @@
               flUpEl.setAttribute('visible', 'false');
 
               // World-anchored container for labels + lines
+              var xSpread = flIdx * 0.4;
               var flBb = document.createElement('a-entity');
               flBb.setAttribute('billboard', '');
               var tapBb = document.createElement('a-entity');
               tapBb.setAttribute('billboard', '');
 
-              // Floor button plane
+              // Floor button plane — X spread in billboard-local space (always screen-horizontal)
               var flBtn = document.createElement('a-plane');
               flBtn.id = 'fl-btn-' + idx + '-' + fl.key;
               flBtn.setAttribute('width', '0.47');
               flBtn.setAttribute('height', '0.30');
-              flBtn.setAttribute('position', (-5.0 + flXOff) + ' 0 0');
+              flBtn.setAttribute('position', (-5.0 + flXOff + xSpread) + ' 0 0');
               flBtn.setAttribute('material', 'side: double; transparent: false; shader: flat');
 
               var flDotGroup = document.createElement('a-entity');
@@ -747,7 +748,7 @@
               tapIconEl.id = 'fl-tap-' + idx + '-' + fl.key;
               tapIconEl.setAttribute('width', '0.40');
               tapIconEl.setAttribute('height', '0.40');
-              tapIconEl.setAttribute('position', (-5.58 + flXOff) + ' 0 0');
+              tapIconEl.setAttribute('position', (-5.58 + flXOff + xSpread) + ' 0 0');
               tapIconEl.setAttribute('material', 'transparent: true; alphaTest: 0.05; shader: flat; side: double');
               tapIconEl.setAttribute('animation__pulse', 'property: scale; from: 1 1 1; to: 1.22 1.22 1; dir: alternate; dur: 900; loop: true; easing: easeInOutSine');
 
@@ -776,13 +777,12 @@
                 flDotGroup.appendChild(hdash);
               }
 
-              // Daylight group (hidden until tapped) — billboard so image faces camera
+              // Daylight group (inside flBb so it inherits billboard rotation exactly)
               var flDg = document.createElement('a-entity');
               flDg.id = 'fl-dg-' + idx + '-' + fl.key;
               flDg.setAttribute('visible', 'false');
-              flDg.setAttribute('billboard', '');
 
-              // Daylight image — vertical billboard panel
+              // Daylight image — X spread matches button spread, rotates with flBb billboard
               var _flScaleMap = { 'E5': 0.7, 'E2': 0.7, 'E2A': 0.85, 'EA': 1.3, 'EW1': 0.85, 'E7': 1.15, 'E4A': 0.7 };
               var flImgScale = _flScaleMap[b.name] !== undefined ? _flScaleMap[b.name] : 1;
               var flImg = document.createElement('a-plane');
@@ -792,17 +792,16 @@
               flImg.dataset.xoff = String(flXOff);
               flImg.setAttribute('height', (4.1 * flImgScale).toFixed(3));
               flImg.setAttribute('width', '5.5');
-              flImg.setAttribute('position', (-8.5 + flXOff) + ' 0 0');
+              flImg.setAttribute('position', (-8.5 + flXOff + xSpread) + ' 0 0');
               flImg.setAttribute('rotation', '0 0 0');
               flImg.setAttribute('material', 'transparent: true; alphaTest: 0.05; side: double; shader: flat; depthTest: true');
               flImg.setAttribute('visible', 'false');
-
-              var flOffsetEl = document.createElement('a-entity');
 
               flDg.appendChild(flImg);
               tapBb.appendChild(tapIconEl);
               flBb.appendChild(flBtn);
               flBb.appendChild(flDotGroup);
+              flBb.appendChild(flDg);
               if (flIdx === 0) {
                 var heatmapLbl = document.createElement('a-text');
                 heatmapLbl.setAttribute('value', 'DAYLIGHT\nHEATMAP');
@@ -813,10 +812,8 @@
                 heatmapLbl.setAttribute('side', 'double');
                 flBb.appendChild(heatmapLbl);
               }
-              flOffsetEl.appendChild(flBb);
-              flOffsetEl.appendChild(tapBb);
-              flOffsetEl.appendChild(flDg);
-              flUpEl.appendChild(flOffsetEl);
+              flUpEl.appendChild(flBb);
+              flUpEl.appendChild(tapBb);
               flParent.appendChild(flUpEl);
             });
           }
