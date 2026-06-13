@@ -756,7 +756,7 @@
               flBtn.setAttribute('height', '0.30');
               flBtn.setAttribute('position', (-5.0 + flXOff) + ' 0 0');
               flBtn.setAttribute('material', 'side: double; transparent: false; shader: flat');
-              flBtn.setAttribute('billboard-x', '');
+              flBtn.setAttribute('billboard', '');
 
               var flDotGroup = document.createElement('a-entity');
               flDotGroup.id = 'fl-dot-' + idx + '-' + fl.key;
@@ -769,7 +769,7 @@
               tapIconEl.setAttribute('position', (-5.58 + flXOff) + ' 0 0');
               tapIconEl.setAttribute('material', 'transparent: true; alphaTest: 0.05; shader: flat; side: double');
               tapIconEl.setAttribute('animation__pulse', 'property: scale; from: 1 1 1; to: 1.22 1.22 1; dir: alternate; dur: 900; loop: true; easing: easeInOutSine');
-              tapIconEl.setAttribute('billboard-x', '');
+              tapIconEl.setAttribute('billboard', '');
 
               // All lines straight and parallel — no fanning
               var nFloors = daylightFloors.length;
@@ -832,7 +832,7 @@
                 heatmapLbl.setAttribute('color', '#000000');
                 heatmapLbl.setAttribute('width', '5');
                 heatmapLbl.setAttribute('side', 'double');
-                heatmapLbl.setAttribute('billboard-x', '');
+                heatmapLbl.setAttribute('billboard', '');
                 flBb.appendChild(heatmapLbl);
               }
               flOffsetEl.appendChild(flBb);
