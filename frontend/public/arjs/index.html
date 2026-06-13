@@ -820,16 +820,16 @@
 
               // Z spread so floors separate when viewed from top
               var flOffsetEl = document.createElement('a-entity');
-              flOffsetEl.setAttribute('position', '0 0 ' + ((flIdx - (nFloors - 1) / 2) * 0.8).toFixed(2));
+              flOffsetEl.setAttribute('position', '0 0 ' + (flIdx * -0.5).toFixed(2));
 
               flDg.appendChild(flImg);
               tapBb.appendChild(tapIconEl);
               flBb.appendChild(flBtn);
               flBb.appendChild(flDotGroup);
-              if (flIdx === nFloors - 1) {
+              if (flIdx === 0) {
                 var heatmapLbl = document.createElement('a-text');
                 heatmapLbl.setAttribute('value', 'DAYLIGHT\nHEATMAP');
-                heatmapLbl.setAttribute('position', (-5.58 + flXOff) + ' 0.8 0.8');
+                heatmapLbl.setAttribute('position', (-5.58 + flXOff) + ' 1 -1.0');
                 heatmapLbl.setAttribute('align', 'center');
                 heatmapLbl.setAttribute('color', '#000000');
                 heatmapLbl.setAttribute('width', '6.5');
