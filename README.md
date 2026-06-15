@@ -4,7 +4,7 @@
 
 A no-download WebAR experience that surfaces real campus energy data through your phone camera. Point at any of the 20 supported building markers to instantly see energy breakdowns, building details, and a direct link to Google Maps — all running on-device in the browser.
 
-🔗 **[Launch the experience →](https://nus-built-environment-web-ar.vercel.app/)**
+🔗 **[Launch the experience →](https://ar.nus-digital-twin.com/)**
 
 ---
 
