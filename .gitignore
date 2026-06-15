@@ -26,6 +26,11 @@ e3mapview.png
 ew1mpaview.png
 sde3mapoview.png
 
+# Docs — ignore working notes, keep ar-settings.json and buildings.json
+docs/*.json
+!docs/ar-settings.json
+!docs/buildings.json
+
 # Misc photos and working assets
 photo_*.jpg
 image1.png

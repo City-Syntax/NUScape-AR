@@ -1,8 +1,8 @@
 {
   "scene": {
-    "detectionMode": "color_and_matrix",
+    "detectionMode": "mono_and_matrix",
     "matrixCodeType": "4x4_BCH_13_5_5",
-    "maxDetectionRate": 60,
+    "maxDetectionRate": 20,
     "sourceWidth": 1280,
     "sourceHeight": 960,
     "canvasWidth": 1280,
@@ -13,17 +13,7 @@
     "smoothCount": 30,
     "smoothTolerance": 0.15,
     "smoothThreshold": 1,
-    "minConfidence": 0.05
-  },
-  "runtime_patches": {
-    "thresholdMode": 3,
-    "thresholdMode_name": "AUTO_ADAPTIVE",
-    "labelingMode": 0,
-    "imageProcMode": 0,
+    "minConfidence": 0.01,
     "minUnvisibleDelay_seconds": 4.0
-  },
-  "pose_filter": {
-    "lerp_alpha": 0.2,
-    "markerLost_hide_delay_ms": 0
   }
 }
