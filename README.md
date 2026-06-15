@@ -1,6 +1,6 @@
 # NUScape-AR
 
-**Augmented Reality for NUS Campus Digital Twin**
+**WebAR for NUS Campus Energy Data**
 
 A no-download WebAR experience that surfaces real campus energy data through your phone camera. Point at any of the 20 supported building markers to instantly see energy breakdowns, building details, and a direct link to Google Maps — all running on-device in the browser.
 
@@ -8,21 +8,22 @@ A no-download WebAR experience that surfaces real campus energy data through you
 
 ---
 
-![Landing page](docs/landing-page.png)
+![Landing page](readme1.png)
 
-![AR experience](docs/ar-experience.png)
+![AR experience](readme2.jpg)
 
 ---
 
 ## Features
 
-- **Image tracking** — MindAR.js detects printed building markers and anchors A-Frame 3D overlays onto them
-- **Energy chart** — Chart.js doughnut panel showing the detected building's annual energy breakdown (Cooling / Equipment / Lighting)
-- **Maps panel** — building photo card that taps through to Google Maps
-- **Landscape mode** — rotates the entire UI 90° for a better one-hand grip
-- **Collapsible panels** — sidebar tabs collapse the chart and map panels to save screen space
+- **Barcode marker tracking** — AR.js detects printed 4×4 BCH barcode markers and anchors A-Frame overlays onto them
+- **Energy chart** — doughnut panel showing annual energy breakdown (Cooling / Equipment / Lighting) and monthly EUI
+- **Daylight heatmap** — per-floor daylight simulation images with floor selector
+- **Solar mat** — rooftop solar panel layout overlay
+- **Building video tour** — campus building walkthrough videos
+- **Maps panel** — building photo card linking to Google Maps
 
-No backend, no app install — everything runs on-device in the browser.
+No backend, no app install — runs entirely on-device in the browser.
 
 ---
 
@@ -31,20 +32,21 @@ No backend, no app install — everything runs on-device in the browser.
 | Code | Building |
 |------|----------|
 | CELC | Centre for English Language Communication |
-| E1 | Faculty of Engineering |
-| E1A | E1A |
-| E2 | Engineering block |
-| E2A | Zero Energy Building |
-| E3 | Engineering block |
-| E3A | Engineering block |
-| E4 | Engineering block |
-| E4A | Engineering block |
-| E5 | Engineering block |
-| E6 | Engineering block |
-| E8 | Engineering block |
+| E1 | Engineering Block E1 |
+| E1A | Engineering Block E1A |
+| E2 | Engineering Block E2 |
+| E2A | Engineering Block E2A |
+| E3 | Engineering Block E3 |
+| E3A | Engineering Block E3A |
+| E4 | Engineering Block E4 |
+| E4A | Engineering Block E4A |
+| E5 | Engineering Block E5 |
+| E6 | Engineering Block E6 |
+| E7 | Engineering Block E7 |
+| E8 | Engineering Block E8 |
 | EA | Engineering Auditorium |
-| EW1 | Engineering Workshop |
-| EW1A | Engineering Workshop Annex |
+| EW1 | Engineering Workshop 1 |
+| IT | I³ Building |
 | SDE1 | School of Design and Environment 1 |
 | SDE2 | School of Design and Environment 2 |
 | SDE3 | School of Design and Environment 3 |
@@ -53,60 +55,14 @@ No backend, no app install — everything runs on-device in the browser.
 
 ---
 
-## Project Structure
+## Tech Stack
 
-```
-frontend/
-  public/
-    ar/
-      index.html          # Main AR experience (all 20 buildings)
-      targets-all.mind    # Compiled MindAR image targets (20 buildings)
-      imgs/               # Building map-view photos for the maps panel
-      map_pin.glb         # Animated map pin 3D model
-    models/               # Individual building GLB models
-    bg*.png               # Landing page background photos
-    logo.png              # NUS Built Environment logo
-  src/
-    pages/
-      Home.jsx            # Landing page
-      Home.css
-docs/                     # README screenshots
-compile-mind.js           # Build script: compile/merge .mind target files
-crop-markers.js           # Build script: crop individual marker PNGs from a sheet
-crop_markers.py           # Build script: Python version of crop-markers
-```
+| Library | Purpose |
+|---------|---------|
+| [AR.js](https://ar-js-org.github.io/AR.js-Docs/) | Barcode marker tracking |
+| [A-Frame 1.7.0](https://aframe.io) | 3D scene and AR overlay rendering |
+| React + Vite | Landing page and building video tour |
 
 ---
 
-## Running Locally
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The AR page (`public/ar/index.html`) is a static HTML file served directly by Vite — no build step needed for the AR itself.
-
----
-
-## Dependencies
-
-| Library | Version | Purpose |
-|---------|---------|---------|
-| [MindAR](https://hiukim.github.io/mind-ar-js-doc/) | 1.2.2 | Image target tracking |
-| [A-Frame](https://aframe.io) | 1.4.2 | 3D scene and AR overlay rendering |
-| [Chart.js](https://www.chartjs.org) | 4.4.0 | Energy use doughnut chart |
-| React + Vite | — | Landing page |
-
----
-
-## AR Markers
-
-Building markers were generated with **[ARMaker](https://shawnlehner.github.io/ARMaker/)** by Shawn Lehner. Each marker encodes a unique visual pattern that MindAR tracks in the live camera feed.
-
-The compiled `targets-all.mind` file was produced by merging individual per-building `.mind` files — decoding each with `@msgpack/msgpack`, concatenating their `dataList` arrays, and re-encoding into a single file. `compile-mind.js` handles this process.
-
----
-
-*Built for NUS Department of the Built Environment · 2025*
+*Built for NUS Department of the Built Environment · 2026*
