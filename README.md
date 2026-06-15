@@ -8,9 +8,9 @@ A no-download WebAR experience that surfaces real campus energy data through you
 
 ---
 
-![Landing page](readme1.png)
+![Landing page](source-assets/readme1.png)
 
-![AR experience](readme2.jpg)
+![AR experience](source-assets/readme2.jpg)
 
 ---
 
