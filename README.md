@@ -17,13 +17,11 @@ A no-download WebAR experience that surfaces real campus energy data through you
 ## Features
 
 - **Barcode marker tracking** — AR.js detects printed 4×4 BCH barcode markers and anchors A-Frame overlays onto them
-- **Energy chart** — doughnut panel showing annual energy breakdown (Cooling / Equipment / Lighting) and monthly EUI
+- **Energy chart** — doughnut panel showing annual energy breakdown (Cooling / Equipment / Lighting) and monthly EUI (Energy Use Intensity — energy consumption divided by floor area, in kWh/m²) (Energy Use Intensity — energy consumption per unit floor area, measured in kWh/m²)
 - **Daylight heatmap** — per-floor daylight simulation images with floor selector
 - **Solar heatmap** — rooftop heat distribution overlay showing thermal conditions across the building roof
 - **Building showcase** — live demonstrations of each building's sustainability components and green features
 - **Maps panel** — building photo card linking to Google Maps
-
-No backend, no app install — runs entirely on-device in the browser.
 
 ---
 
@@ -59,7 +57,7 @@ No backend, no app install — runs entirely on-device in the browser.
 
 | Library | Role |
 |---------|------|
-| [AR.js](https://ar-js-org.github.io/AR.js-Docs/) | Handles real-time camera access, marker detection, and pose estimation — it figures out where the physical marker is in 3D space and keeps the virtual content locked to it as the camera moves |
+| [AR.js 3.4.8](https://ar-js-org.github.io/AR.js-Docs/) | Handles real-time camera access, marker detection, and pose estimation — it figures out where the physical marker is in 3D space and keeps the virtual content locked to it as the camera moves |
 | [A-Frame 1.7.0](https://aframe.io) | Declarative 3D/WebXR framework built on Three.js — renders all the AR overlays (charts, labels, heatmap images, floor buttons) as entities in a scene that AR.js drives |
 | [React](https://react.dev) | Builds the landing page and building showcase UI as reusable components with reactive state |
 | [Vite](https://vitejs.dev) | Development server and build tool — bundles and serves the React frontend with fast hot-module reload during development |
